@@ -8,7 +8,7 @@
   margin: auto;
   padding-top: 80px;
   padding-bottom: 80px;
-  color: white;
+  background-color: darkgrey;
 }
 
 .main__title {
@@ -25,6 +25,23 @@
   font-size: 18px;
   font-weight: 400;
   margin: 32px 0 0;
+}
+
+.main__button-createUser {
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 500;
+  background: #2F71E5;
+  width: 360px;
+  height: 64px;
+  border-radius: 100px;
+  border: unset;
+  margin-top: 39px;
+  margin-left: calc((100% - 360px) / 2);
+  padding: 0;
+  cursor: url('../../images/pointer.svg'), pointer;
+  outline: none;
 }
 
 @media (max-width: 950px) {

@@ -1,0 +1,109 @@
+.usersList {
+  background-color: #1A1B22;
+  max-width: 1440px;
+  min-height: 288px;
+  margin: auto;
+  padding: 80px 0;
+}
+
+.usersList__title {
+  font-family: 'Roboto Slab', sans-serif;
+  line-height: 46px;
+  font-size: 40px;
+  font-weight: normal;
+  color: #1A1B22;
+  max-width: max-content;
+  margin: 0 0 0 104px;
+}
+
+.usersList__users {
+  list-style: none;
+  width: 1232px;
+  margin: 64px auto 0;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 400px);
+  grid-template-rows: repeat(1, 1fr);
+  grid-column-gap: 16px;
+  grid-row-gap: 16px;
+  padding: 0;
+  justify-content: space-around;
+}
+
+.usersList__showMore-button {
+  display: flex;
+  background: #FFF;
+  border: unset;
+  border-radius: 80px;
+  font-family: 'Roboto Slab', sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 24px;
+  margin: 64px auto 0;
+  outline: none;
+  width: 288px;
+  height: 64px;
+  padding: 0;
+  justify-content: center;
+  align-items: center;
+  cursor: url('../../images/pointer.svg'), pointer;
+  transition: all 1s linear;
+}
+
+.usersList__error {
+  font-family: 'Roboto Slab', sans-serif;
+  line-height: 36px;
+  font-size: 30px;
+  font-weight: normal;
+  color: #B6BCBF;
+  max-width: 750px;
+  margin: 30px 0 0 104px;
+  display: block;
+}
+
+.usersList__showMore-button:hover {
+  background: #347EFF;
+}
+
+@media (max-width: 950px) {
+  .usersList {
+    padding: 40px 0;
+  }
+  .usersList__title  {
+    line-height: 34px;
+    font-size: 30px;
+    margin-left: 40px;
+  }
+  .usersList__users {
+    grid-template-columns: repeat(auto-fit, 224px);
+    grid-column-gap: 8px;
+    grid-row-gap: 8px;
+  }
+  .usersList__showMore-button {
+    width: 240px;
+    height: 56px;
+    margin-top: 32px;
+  }
+  .usersList__error {
+    line-height: 24px;
+    font-size: 20px;
+    margin-left: 40px;
+  }
+}
+
+@media (max-width: 600px) {
+  .usresList {
+    padding: 32px 0;
+  }
+  .usersList__title {
+    margin: 0 16px 0;
+  }
+  .usersList__users {
+    grid-template-columns: repeat(1, 288px);
+    grid-row-gap: 10px;
+  }
+  .usersList__showMore-button {
+    width: 288px;
+    margin-top: 16px;
+  }
+}

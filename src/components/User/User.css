@@ -1,0 +1,96 @@
+.userCard {
+  position: relative;
+  min-width: 224px;
+  border-radius: 16px;
+  background-color: lightslategrey;
+  overflow: hidden;
+}
+
+.userCard__info {
+  margin: 20px 24px 24px;
+  justify-content: space-between;
+  max-width: 352px;
+  cursor: url('../../images/pointer.svg'), pointer;
+  text-decoration: none;
+  color: #1A1B22;
+}
+
+.userCard__title {
+  font-family: 'Roboto Slab', sans-serif;
+  line-height: 30px;
+  font-size: 26px;
+  font-weight: normal;
+  color: #1A1B22;
+  margin: 12px auto 16px;
+  max-width: 352px;
+}
+
+.userCard__text {
+  font-family: 'Roboto', sans-serif;
+  line-height: 22px;
+  font-size: 16px;
+  font-weight: normal;
+  color: #1A1B22;
+  max-width: 352px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  line-clamp: 3;
+  box-orient: vertical;
+  margin: 0 0 18px;
+}
+
+ .userCard__delete-button {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 8px;
+  background-image: url('../../images/trash.svg');
+  background-color: white;
+  background-repeat: no-repeat;
+  background-position: center;
+  outline: none;
+  cursor: url('../../images/pointer.svg'), pointer;
+}
+
+.userCard__delete-button:hover {
+  transition: all 0.5s linear;
+  opacity: 0.6;
+  cursor: url('../../images/pointer.svg'), pointer;
+}
+
+@media (max-width: 950px) {
+  .userCard__info {
+    margin: 16px;
+    max-width: 192px;
+  }
+  .userCard__title {
+    line-height: 24px;
+    font-size: 22px;
+  }
+   .userCard__delete-button {
+    top: 8px;
+    right: 8px;
+  }
+}
+
+@media (max-width: 600px) {
+  .userCard__info {
+    max-width: 256px;
+  }
+  .userCard__title {
+    line-height: 28px;
+    font-size: 22px;
+  }
+.userCard__delete-button {
+    top: 16px;
+    right: 16px;
+  }
+}

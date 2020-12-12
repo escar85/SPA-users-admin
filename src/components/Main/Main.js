@@ -10,6 +10,7 @@ function Main(props) {
         <p className='main__text'>Находите самые свежие статьи на любую тему и сохраняйте в своём личном кабинете.</p>
         <SearchForm
         />
+        <button type='button' aria-label='openPopup' className='main__button-createUser' onClick={props.openPopup}>Создать пользователя</button>
       </div>
     </main>
   );

@@ -1,25 +1,28 @@
 import React, { useCallback } from 'react';
-import { Route } from 'react-router-dom';
 
-
-import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
-import LoginPopup from '../LoginPopup/LoginPopup';
-import RegisterPopup from '../RegisterPopup/RegisterPopup';
+import CreateUserPopup from '../CreateUserPopup/CreateUserPopup';
 import SuccessPopup from '../SuccessPopup/SuccessPopup';
+import UsersList from '../UsersList/UsersList';
 
 function App() {
 
+  const [users, setUsers] = React.useState([]);
+  const [date, setDate] = React.useState('');
+  console.log(date)
   // переменные состояний видимости попапов
-  const [isLoginPopupOpen, setIsLoginPopupOpen] = React.useState(false);
-  const [isRegisterPopupOpen, setIsRegisterPopupOpen] = React.useState(false);
+  const [isCreateUserPopupOpen, setIsCreateUserPopupOpen] = React.useState(false);
   const [isSuccessPopupOpen, setIsSuccessPopupOpen] = React.useState(false);
 
   function closeAllPopups() {
-    setIsLoginPopupOpen(false);
-    setIsRegisterPopupOpen(false);
+    setIsCreateUserPopupOpen(false);
     setIsSuccessPopupOpen(false);
+  }
+
+
+  function openPopup() {
+    setIsCreateUserPopupOpen(true)
   }
 
   // эффект для закрытия попапов кликом на оверлей или по нажатию клавиши "ESC"
@@ -39,29 +42,51 @@ function App() {
     }
   })
 
+  function createUser({ email, password, name, phoneNumber }) {
+    const newUser = { name, password, email, phoneNumber, date }
+    users.push(newUser)
+    localStorage.setItem('users', JSON.stringify(users))
+    closeAllPopups()
+  }
+
+  const storage = useCallback(() => {
+    const storage = JSON.parse(localStorage.getItem('users'))
+    if (storage) {
+      setUsers(storage)
+    }
+  }, [])
+
+  React.useEffect(() => {
+    storage()
+  }, [storage])
+
+  React.useEffect(() => {
+    const date = new Date();
+    const dateTo = date.toISOString().substring(0, 10)
+    setDate(dateTo)
+  }, [])
+
   return (
     <div className='root'>
 
-      <Header />
-
-      <Main />
+      <Main
+        openPopup={openPopup}
+      />
+      <UsersList
+        users={users}
+      />
 
       <Footer />
 
-      <LoginPopup
-        isOpen={isLoginPopupOpen}
+      <CreateUserPopup
+        isOpen={isCreateUserPopupOpen}
         onClose={closeAllPopups}
-      />
-
-      <RegisterPopup
-        isOpen={isRegisterPopupOpen}
-        onClose={closeAllPopups}
+        onCreate={createUser}
       />
 
       <SuccessPopup
         isOpen={isSuccessPopupOpen}
         onClose={closeAllPopups}
-
       />
 
     </div>
