@@ -7,11 +7,9 @@
 }
 
 .userCard__info {
-  margin: 20px 24px 24px;
+  margin: 55px 24px 24px;
   justify-content: space-between;
   max-width: 352px;
-  cursor: url('../../images/pointer.svg'), pointer;
-  text-decoration: none;
   color: #1A1B22;
 }
 
@@ -44,23 +42,31 @@
   margin: 0 0 18px;
 }
 
- .userCard__delete-button {
+ .userCard__delete-button, .userCard__edit-button {
   position: absolute;
-  top: 24px;
-  right: 24px;
+  top: 12px;
   width: 40px;
   height: 40px;
   border: none;
   border-radius: 8px;
-  background-image: url('../../images/trash.svg');
   background-color: white;
   background-repeat: no-repeat;
   background-position: center;
+  background-color: black;
   outline: none;
-  cursor: url('../../images/pointer.svg'), pointer;
 }
 
-.userCard__delete-button:hover {
+.userCard__delete-button {
+  background-image: url('../../images/trash.svg');
+  right: 12px;
+}
+
+.userCard__edit-button {
+  background-image: url('../../images/edit.svg');
+  right: 57px;
+}
+
+.userCard__delete-button:hover,  .userCard__edit-button:hover {
   transition: all 0.5s linear;
   opacity: 0.6;
   cursor: url('../../images/pointer.svg'), pointer;
@@ -68,7 +74,7 @@
 
 @media (max-width: 950px) {
   .userCard__info {
-    margin: 16px;
+    margin: 55px 16px 16px;
     max-width: 192px;
   }
   .userCard__title {
@@ -78,6 +84,10 @@
    .userCard__delete-button {
     top: 8px;
     right: 8px;
+  }
+  .userCard__edit-button {
+    top: 8px;
+    right: 53px;
   }
 }
 
@@ -90,7 +100,11 @@
     font-size: 22px;
   }
 .userCard__delete-button {
-    top: 16px;
-    right: 16px;
+    top: 12px;
+    right: 12px;
+  }
+  .userCard__edit-button {
+    top: 12px;
+    right: 57px;
   }
 }

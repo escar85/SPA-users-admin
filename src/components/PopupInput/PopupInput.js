@@ -13,6 +13,8 @@ function PopupInput(props) {
     className="popup__input"
     placeholder={props.placeholder}
     onChange={props.onChange}
+    pattern={props.pattern}
+    defaultValue={props.defaultValue}
   />
   <span className="popup__input_type_error" id="inputName-error">{props.errorText}</span>
   </>

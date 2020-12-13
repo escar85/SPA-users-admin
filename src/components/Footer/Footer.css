@@ -13,23 +13,12 @@
   color: #B6BCBF;
 }
 
-.footer__navigation {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.footer__text-links {
-  display: flex;
-  justify-content: space-between;
-  width: 270px;
-  margin-right: 40px;
-}
-
 .footer__icon-links {
   display: flex;
   justify-content: space-between;
   width: 68px;
+  align-items: center;
+
 }
 
 .footer__link {
@@ -62,19 +51,5 @@
 @media (max-width: 750px) {
   .footer {
     margin: 20px 16px 18px;
-    flex-direction: column-reverse;
-    align-items: center;
-  }
-
-  .footer__text-links {
-    flex-direction: column;
-  }
-
-  .footer__navigation {
-    width: 90%;
-  }
-
-  .footer__link:first-of-type {
-    margin-bottom: 32px;
   }
 }

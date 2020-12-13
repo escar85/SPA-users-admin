@@ -3,26 +3,42 @@ import React, { useCallback } from 'react';
 import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
 import CreateUserPopup from '../CreateUserPopup/CreateUserPopup';
-import SuccessPopup from '../SuccessPopup/SuccessPopup';
+import EditUserPopup from '../EditUserPopup/EditUserPopup';
+import SearchPopup from '../SearchPopup/SearchPopup';
 import UsersList from '../UsersList/UsersList';
+import { useFormWithValidation } from '../../utils/Validation';
 
 function App() {
 
+  const { resetForm } = useFormWithValidation();
+
   const [users, setUsers] = React.useState([]);
   const [date, setDate] = React.useState('');
-  console.log(date)
+  const [currentUser, setCurrentUser] = React.useState({});
+  const [filteredUsers, setFilteredUsers] = React.useState([]);
   // переменные состояний видимости попапов
   const [isCreateUserPopupOpen, setIsCreateUserPopupOpen] = React.useState(false);
-  const [isSuccessPopupOpen, setIsSuccessPopupOpen] = React.useState(false);
+  const [isEditUserPopupOpen, setIsEditUserPopupOpen] = React.useState(false);
+  const [isSearchPopupOpen, setSearchPopupOpen] = React.useState(false);
 
   function closeAllPopups() {
     setIsCreateUserPopupOpen(false);
-    setIsSuccessPopupOpen(false);
+    setIsEditUserPopupOpen(false);
+    setSearchPopupOpen(false);
+    resetForm();
   }
 
+  function openCreatePopup() {
+    setIsCreateUserPopupOpen(true);
+  }
 
-  function openPopup() {
-    setIsCreateUserPopupOpen(true)
+  function openSearchPopup() {
+    setSearchPopupOpen(true);
+  }
+
+  function openEditPopup(user) {
+    setIsEditUserPopupOpen(true);
+    setCurrentUser(user);
   }
 
   // эффект для закрытия попапов кликом на оверлей или по нажатию клавиши "ESC"
@@ -42,11 +58,47 @@ function App() {
     }
   })
 
-  function createUser({ email, password, name, phoneNumber }) {
-    const newUser = { name, password, email, phoneNumber, date }
+  function createUser({ email, password, name, phoneNumber, status }) {
+    const newUser = { name, password, email, phoneNumber, status, dateOfCreate: date }
     users.push(newUser)
     localStorage.setItem('users', JSON.stringify(users))
     closeAllPopups()
+  }
+
+  function handleUserDelete(user) {
+    const newUsers = users.filter((u) => u.email !== user.email);
+    setUsers(newUsers);
+    localStorage.setItem('users', JSON.stringify(newUsers))
+  }
+
+  function editUser({ email, password, name, phoneNumber, status }) {
+    const newUser = { name, password, email, phoneNumber, status, dateOfCreate: currentUser.dateOfCreate, editDate: date }
+    const newUsers = users.filter((u) => u.email !== currentUser.email);
+    newUsers.push(newUser)
+    setUsers(newUsers);
+    localStorage.setItem('users', JSON.stringify(newUsers))
+    closeAllPopups()
+  }
+
+  function filterUsers({ status }) {
+    const filteredUsers = users.filter((u) => u.status === status);
+    setFilteredUsers(filteredUsers);
+  }
+
+  function resetFilter() {
+    setFilteredUsers([]);
+  }
+
+  function searchByEmail({ email }) {
+    const searchedUser = users.filter((u) => u.email === email);
+    setFilteredUsers(searchedUser);
+    closeAllPopups();
+  }
+
+  function searchByTel({ tel }) {
+    const searchedUser = users.filter((u) => u.email === tel);
+    setFilteredUsers(searchedUser);
+    closeAllPopups();
   }
 
   const storage = useCallback(() => {
@@ -70,10 +122,16 @@ function App() {
     <div className='root'>
 
       <Main
-        openPopup={openPopup}
+        openCreatePopup={openCreatePopup}
+        openSearchPopup={openSearchPopup}
       />
       <UsersList
         users={users}
+        onUserDelete={handleUserDelete}
+        openPopup={openEditPopup}
+        onFilter={filterUsers}
+        filteredUsers={filteredUsers}
+        handleReset={resetFilter}
       />
 
       <Footer />
@@ -84,11 +142,20 @@ function App() {
         onCreate={createUser}
       />
 
-      <SuccessPopup
-        isOpen={isSuccessPopupOpen}
+      <EditUserPopup
+        isOpen={isEditUserPopupOpen}
         onClose={closeAllPopups}
+        onEdit={editUser}
+        user={currentUser}
       />
 
+      <SearchPopup
+        isOpen={isSearchPopupOpen}
+        onClose={closeAllPopups}
+        onCreate={createUser}
+        onSearchByEmail={searchByEmail}
+        onSearchByTel={searchByTel}
+      />
     </div>
   );
 };

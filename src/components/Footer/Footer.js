@@ -5,10 +5,7 @@ import facebook from '../../images/facebook.svg';
 function Footer() {
   return (
     <footer className='footer'>
-      <p className="footer__copyright">&copy; 2020 Supersite, Powered by News API</p>
-      <nav className='footer__navigation'>
-        <div className='footer__text-links'>
-        </div>
+      <p className="footer__copyright">&copy; 2020 Made by Dmitry Melnik</p>
         <div className='footer__icon-links'>
           <a href='https://github.com/escar85' target='blank' className='footer__link'>
             <img alt='github' src={github} className='footer__social-icon' />
@@ -17,7 +14,6 @@ function Footer() {
             <img alt='facebook' src={facebook} className='footer__social-icon' />
           </a>
         </div>
-      </nav>
     </footer>
   );
 };

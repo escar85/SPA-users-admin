@@ -1,23 +1,16 @@
 import React from 'react';
-
 import User from '../User/User';
-
-
+import { useForm } from '../../utils/Validation';
 
 function UsersList(props) {
 
-  const [index, setIndex] = React.useState(3);
-  const [renderedUsers, setRenderedUsers] = React.useState(props.users.slice(0, 3))
+  const { values, handleChange } = useForm();
 
-  function showMore() {
-    const arr = props.users.slice(index, index + 3);
-    setIndex(index + 3);
-    setRenderedUsers([...renderedUsers, ...arr]);
+  function handleFilter() {
+    props.onFilter({
+      status: values.status || 'client'
+    })
   }
-
-  React.useEffect(() => {
-    setRenderedUsers(props.users.slice(0, 3))
-  }, [props.users])
 
   return (
     <>
@@ -25,20 +18,38 @@ function UsersList(props) {
         ?
         <section className='usersList'>
           <h3 className='usersList__title'>Список пользователей</h3>
+
+          <label className='popup__input_label'>Выберите статус для фильтрации пользователей:</label>
+          <select name='status' className='popup__select' onChange={handleChange}>
+            <option className='popup__select_option' value='Client'>Client</option>
+            <option className='popup__select_option' value='Partner'>Partner</option>
+            <option className='popup__select_option' value='Admin'>Admin</option>
+          </select>
+
+          <button type='button' aria-label='filter' className='usersList__button' onClick={handleFilter}>Отфильтровать</button>
+          <button type='button' aria-label='reset' className='usersList__button' onClick={props.handleReset}>Показать всех</button>
+
           <ul className='usersList__users'>
-            {renderedUsers.map(({ name, password, email, phoneNumber, date }) => (
+            { props.filteredUsers.length > 0
+            ? props.filteredUsers.map(({ name, password, email, phoneNumber, status, dateOfCreate, editDate }) => (
               <User
-                user={{ name, password, email, phoneNumber, date }}
+                user={{ name, password, email, phoneNumber, status, dateOfCreate, editDate }}
                 key={email}
+                onUserDelete={props.onUserDelete}
+                openEditPopup={props.openPopup}
+              />
+            ))
+            : props.users.map(({ name, password, email, phoneNumber, status, dateOfCreate, editDate }) => (
+              <User
+                user={{ name, password, email, phoneNumber, status, dateOfCreate, editDate }}
+                key={email}
+                onUserDelete={props.onUserDelete}
+                openEditPopup={props.openPopup}
               />
             ))}
           </ul>
-          {props.users.length > 2 && !(renderedUsers.length === props.users.length)
-            ? <button type="button" aria-label="showMore" onClick={showMore} className="usersList__showMore-button">Показать ещё</button>
-            : ''
-          }
         </section>
-        : <h3 className='usersList__title'>Здесь будут созданные пользователи</h3> 
+        : <h3 className='usersList__title'>Здесь будут созданные пользователи</h3>
       }
     </>
   );

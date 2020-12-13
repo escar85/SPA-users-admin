@@ -3,25 +3,31 @@ import PopupWithFrom from '../PopupWithForm/PopupWithForm';
 import PopupInput from '../PopupInput/PopupInput';
 import { useFormWithValidation } from '../../utils/Validation';
 
-function CreateUserPopup(props) {
+function EditUserPopup(props) {
 
-  const { values, handleChange, errors, isValid, } = useFormWithValidation();
+  const { values, handleChange, errors, isValid, setIsValid } = useFormWithValidation();
 
   function handleSubmit() {
-    props.onCreate({
-      password: values.password,
-      email: values.email,
-      name: values.name,
-      phoneNumber: values.tel,
-      status: values.status || 'client'
+    props.onEdit({
+      password: values.password || props.user.password,
+      email: values.email || props.user.email,
+      name: values.name || props.user.name,
+      phoneNumber: values.tel || props.user.phoneNumber,
+      status: values.status || props.user.status
     })
   }
 
+  React.useEffect(() => {
+    setIsValid(true)
+  }, [setIsValid])
+
+
+
   return (
     <PopupWithFrom
-      name='createUser'
-      title='Создание нового пользователя'
-      submitButtonName='Создать'
+      name='editUser'
+      title='Редактирование пользователя'
+      submitButtonName='Изменить'
       isOpen={props.isOpen}
       isValid={isValid}
       onClose={props.onClose}
@@ -36,6 +42,7 @@ function CreateUserPopup(props) {
         onChange={handleChange}
         errorText={errors.email}
         label='Email'
+        defaultValue={props.user.email}
       />
 
       <PopupInput
@@ -46,6 +53,7 @@ function CreateUserPopup(props) {
         onChange={handleChange}
         errorText={errors.password}
         label='Пароль'
+        defaultValue={props.user.password}
       />
 
       <PopupInput
@@ -56,6 +64,7 @@ function CreateUserPopup(props) {
         onChange={handleChange}
         errorText={errors.name}
         label='ФИО'
+        defaultValue={props.user.name}
       />
 
       <PopupInput
@@ -64,9 +73,10 @@ function CreateUserPopup(props) {
         maxLength='30'
         placeholder='Введите номер в формате 7(XXX)XXX-XX-XX'
         onChange={handleChange}
-        errorText={errors.phoneNumber}
+        errorText={errors.tel}
         label='Номер телефона'
-      //pattern='7\([0-9]{3}\)[0-9]{3}-[0-9]{2}-[0-9]{2}'
+        defaultValue={props.user.phoneNumber}
+        pattern='7\([0-9]{3}\)[0-9]{3}-[0-9]{2}-[0-9]{2}'
       />
       <label className='popup__input_label'>Статус пользователя:</label>
       <select name='status' className='popup__select' onChange={handleChange}>
@@ -79,4 +89,4 @@ function CreateUserPopup(props) {
   );
 };
 
-export default CreateUserPopup;
+export default EditUserPopup;
