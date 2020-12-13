@@ -6,6 +6,7 @@ import CreateUserPopup from '../CreateUserPopup/CreateUserPopup';
 import EditUserPopup from '../EditUserPopup/EditUserPopup';
 import SearchPopup from '../SearchPopup/SearchPopup';
 import UsersList from '../UsersList/UsersList';
+import NotFound from '../NotFound/NotFound';
 import { useFormWithValidation } from '../../utils/Validation';
 
 function App() {
@@ -16,6 +17,8 @@ function App() {
   const [date, setDate] = React.useState('');
   const [currentUser, setCurrentUser] = React.useState({});
   const [filteredUsers, setFilteredUsers] = React.useState([]);
+  const [isNotFound, setIsNotFound] = React.useState(false);
+  console.log(filteredUsers)
   // переменные состояний видимости попапов
   const [isCreateUserPopupOpen, setIsCreateUserPopupOpen] = React.useState(false);
   const [isEditUserPopupOpen, setIsEditUserPopupOpen] = React.useState(false);
@@ -83,6 +86,9 @@ function App() {
   function filterUsers({ status }) {
     const filteredUsers = users.filter((u) => u.status === status);
     setFilteredUsers(filteredUsers);
+    filteredUsers.length === 0
+      ? setIsNotFound(true)
+      : setIsNotFound(false)
   }
 
   function resetFilter() {
@@ -92,12 +98,18 @@ function App() {
   function searchByEmail({ email }) {
     const searchedUser = users.filter((u) => u.email === email);
     setFilteredUsers(searchedUser);
+    filteredUsers.length === 0
+    ? setIsNotFound(true)
+    : setIsNotFound(false)
     closeAllPopups();
   }
 
   function searchByTel({ tel }) {
     const searchedUser = users.filter((u) => u.email === tel);
     setFilteredUsers(searchedUser);
+    filteredUsers.length === 0
+    ? setIsNotFound(true)
+    : setIsNotFound(false)
     closeAllPopups();
   }
 
@@ -125,6 +137,9 @@ function App() {
         openCreatePopup={openCreatePopup}
         openSearchPopup={openSearchPopup}
       />
+
+      {isNotFound ? <NotFound /> : <></>}
+
       <UsersList
         users={users}
         onUserDelete={handleUserDelete}
