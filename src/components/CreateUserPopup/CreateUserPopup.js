@@ -66,7 +66,7 @@ function CreateUserPopup(props) {
         onChange={handleChange}
         errorText={errors.phoneNumber}
         label='Номер телефона'
-      //pattern='7\([0-9]{3}\)[0-9]{3}-[0-9]{2}-[0-9]{2}'
+        pattern='7\([0-9]{3}\)[0-9]{3}-[0-9]{2}-[0-9]{2}'
       />
       <label className='popup__input_label'>Статус пользователя:</label>
       <select name='status' className='popup__select' onChange={handleChange}>
